@@ -1,16 +1,4 @@
 
-<?php 
-
-include_once "function.php";
-
-$mahasiswa = query("SELECT * FROM mahasiswa");
-
-// cari
-if (isset($_POST["cari"])) {
-    $mahasiswa = cari($_POST["key"]);
-}
-
-?>
 
 
 <!DOCTYPE html>
@@ -50,23 +38,6 @@ if (isset($_POST["cari"])) {
                 </thead>
                 <tbody>
     
-                <?php $no = 1 ?>
-                    <?php foreach ($mahasiswa as $mhs) :?>
-                        <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= $mhs["npm"]; ?></td>
-                            <td><?= $mhs["nama"]; ?></td>
-                            <td><?= $mhs["email"]; ?></td>
-                            <td><?= $mhs["jurusan"]; ?></td>
-                            <td>
-                                <img src="./img/<?= $mhs["gambar"]; ?>" alt="">
-                            </td>
-                            <td>
-                                <a href="./edit.php?id=<?= $mhs["id"] ?>">edit</a>
-                                <a href="./delete.php?id=<?= $mhs["id"] ?>">delete</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

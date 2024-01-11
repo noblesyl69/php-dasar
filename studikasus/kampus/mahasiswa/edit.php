@@ -1,7 +1,7 @@
 
 <?php 
 
-    include_once "./function.php";
+    include_once "../config/functionMhs.php";
 
     $id = $_GET["id"];
     $mhs = edit("SELECT * FROM mahasiswa WHERE id = $id")[0];
@@ -32,8 +32,9 @@
 <body>
     <div >
         <h1>FORM CREATE DATA MAHASISWA</h1>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?= $mhs["id"]; ?>" >
+            <input type="hidden" name="gambarLama" value="<?= $mhs["gambar"]; ?>" >
             <label for="">
                 <span>Npm</span>
                 <input type="text" name="npm" value="<?= $mhs["npm"]; ?>">
@@ -58,7 +59,16 @@
             </label>
             <br>
             <br>
-            <button type="submit" name="submit">Create Data</button>
+            <label for="">
+                <span>Gambar</span>
+                <br>
+                <img style="width: 250px;" src="../mahasiswa/img/<?= $mhs["gambar"]; ?>" alt="">
+                <br>
+                <input type="file" name="gambar">
+            </label>
+            <br>
+            <br>
+            <button type="submit" name="submit">Update Data</button>
         </form>
     </div>
     

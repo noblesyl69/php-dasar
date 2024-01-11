@@ -1,33 +1,4 @@
 
-<?php 
-
-    include_once "../config/functionMhs.php";
-
-
-    
-
-    if (isset($_POST["submit"])) {
-        if (create($_POST) > 0) {
-            echo "
-                <script>
-                    alert('data anda berhasil di tambahkan');
-                    document.location.href='./index.php';
-                </script>
-            ";
-        }else {
-            echo "
-                <script>
-                    alert('data anda gagal di tambahkan');
-                    document.location.href='./index.php';
-                </script>
-            ";
-        }
-    }
-
-
-
-
-?>
 
 
 <!DOCTYPE html>
@@ -41,7 +12,7 @@
 <body>
     <div >
         <h1>FORM CREATE DATA MAHASISWA</h1>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post">
             <label for="">
                 <span>Npm</span>
                 <input type="text" name="npm">
@@ -63,12 +34,6 @@
             <label for="">
                 <span>jurusan</span>
                 <input type="text" name="jurusan">
-            </label>
-            <br>
-            <br>
-            <label for="">
-                <span>gambar</span>
-                <input type="file" name="gambar">
             </label>
             <br>
             <br>

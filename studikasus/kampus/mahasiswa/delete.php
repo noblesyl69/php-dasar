@@ -1,6 +1,6 @@
 <?php 
 
-    include_once "./function.php";
+    include_once "../config/functionMhs.php";
 
     $id = $_GET["id"];
     if (delete($id) > 0) {

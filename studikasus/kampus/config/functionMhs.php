@@ -24,8 +24,13 @@
         $email = htmlspecialchars($data["email"]);
         $jurusan = htmlspecialchars($data["jurusan"]);
 
-        $query = "INSERT INTO mahasiswa(npm,nama,email,jurusan) VALUES 
-                    ('$npm','$nama','$email','$jurusan')";
+        $gambar = upload();
+        if (!$gambar) {
+            return false;
+        }
+
+        $query = "INSERT INTO mahasiswa(npm,nama,email,jurusan,gambar) VALUES 
+                    ('$npm','$nama','$email','$jurusan','$gambar')";
 
         mysqli_query($con, $query);
         return mysqli_affected_rows($con);
@@ -52,12 +57,21 @@
         $nama = htmlspecialchars($data["nama"]);
         $email = htmlspecialchars($data["email"]);
         $jurusan = htmlspecialchars($data["jurusan"]);
+        $gambarLama = htmlspecialchars($data["gambarLama"]);
+
+        // cek gambar
+        if ($_FILES["gambar"]["error"] === 4) {
+            $gambar = $gambarLama;
+        }else {
+            $gambar = upload();
+        }
 
         $queryData = "UPDATE mahasiswa SET 
                     npm = '$npm',
                     nama = '$nama',
                     email = '$email',
-                    jurusan = '$jurusan'
+                    jurusan = '$jurusan',
+                    gambar = '$gambar'
                     WHERE id = $id
                 ";
         mysqli_query($con, $queryData);
@@ -77,6 +91,56 @@
     function cari($key) {
         $query = "SELECT * FROM mahasiswa WHERE nama LIKE '%$key%'";
         return query($query);
+    }
+
+    // fungsi upload
+    function upload() {
+        
+        $nameFile = $_FILES["gambar"]["name"];
+        $error = $_FILES["gambar"]["error"];
+        $ukuranGambar = $_FILES["gambar"]["size"];
+        $tmpName = $_FILES["gambar"]["tmp_name"];
+
+        // cek ada gambar atau tidak ada
+        if ($error === 4) {
+            
+            echo "
+                <script>
+                    alert('tidak ada file gambar yang di masukkan');
+                </script>
+            "; 
+            return false;
+        }
+
+        // cek jenis file
+        $validasiJenisFile = ["jpg", "jpeg", "png"];
+        $jenisFile = explode(".", $nameFile);
+        $jenisFile = strtolower(end($jenisFile));
+        if (!in_array($jenisFile, $validasiJenisFile)) {
+            echo "
+                <script>
+                    alert('file anda bukan gambar masukkan gambar saja');
+                </script>
+            "; 
+            return false;
+        }
+
+        // cek ukuran file
+        if ($ukuranGambar > 3000000) {
+            echo "
+                <script>
+                    alert('file anda terlalu besar | batas file 2mb');
+                </script>
+            "; 
+            return false;
+        }
+
+        $jenisFileBaru = uniqid().".".$jenisFile;
+        move_uploaded_file($tmpName,"img/".$jenisFileBaru);
+
+        return $jenisFileBaru;
+
+
     }
 
 ?>

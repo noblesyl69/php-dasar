@@ -1,7 +1,7 @@
 
 <?php 
 
-include_once "function.php";
+include_once "../config/functionMhs.php";
 
 $mahasiswa = query("SELECT * FROM mahasiswa");
 
@@ -58,8 +58,8 @@ if (isset($_POST["cari"])) {
                             <td><?= $mhs["nama"]; ?></td>
                             <td><?= $mhs["email"]; ?></td>
                             <td><?= $mhs["jurusan"]; ?></td>
-                            <td>
-                                <img src="./img/<?= $mhs["gambar"]; ?>" alt="">
+                            <td style="width: 300px;">
+                                <img style="width: 60%;" src="./img/<?= $mhs["gambar"]; ?>" alt="">
                             </td>
                             <td>
                                 <a href="./edit.php?id=<?= $mhs["id"] ?>">edit</a>
