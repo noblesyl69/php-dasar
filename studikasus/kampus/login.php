@@ -1,16 +1,28 @@
 <?php 
 
     session_start();
+    include_once "./config/functionRegis.php";
 
+    // cek cookie
+    if (isset($_COOKIE["id"]) && isset($_COOKIE["key"])) {
+        // ambil data nya
+        $id = $_COOKIE["id"];
+        $key = $_COOKIE["key"];
+
+        $query = mysqli_query($con, "SELECT username FROM users WHERE id = $id");
+        $result = mysqli_fetch_assoc($query);
+        // cek username sama dengan key username gak
+        if ($key === hash("sha256", $result["username"])) {
+            $_SESSION["login"] = true;
+        }
+    }
+
+
+    // cek session
     if (isset($_SESSION["login"])) {
         header("location: ./dashboard.php");
         exit;
     }
-
-
-    include_once "./config/functionRegis.php";
-
-
 
     // cek tombol submit nya
     if (isset($_POST["login"])) {
@@ -28,6 +40,13 @@
 
                 // cek session
                 $_SESSION["login"] = true;
+
+                // cek cooki
+                if (isset($_POST["remember"])) {
+                    // set cookie
+                    setcookie("id", $row["id"], time() + 60);
+                    setcookie("key", hash("sha256", $row["username"]), time()+60 );
+                }
 
                 header("location: ./dashboard.php");
                 exit;
@@ -64,6 +83,11 @@
             <li>
                 <label for="password">password</label><br>
                 <input type="password" name="password" id="password">
+            </li>
+            <br>
+            <li>
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">Remember me</label><br>
             </li>
             <br>
             <li>

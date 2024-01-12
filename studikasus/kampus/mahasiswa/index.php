@@ -3,7 +3,21 @@
 
 include_once "../config/functionMhs.php";
 
-$mahasiswa = query("SELECT * FROM mahasiswa");
+// paginatiom
+// buat var jumlah data perhalaman
+$jumlahDataPerhalaman = 2;
+// buat jumlah data dari database
+$jumlahData = count(query("SELECT * FROM mahasiswa"));
+// jumlah halaman dari jumlah data di bagi jumlah data perhalaman
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+// halaman aktif
+$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+// data awal
+$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+
+
+
+$mahasiswa = query("SELECT * FROM mahasiswa LIMIT $awalData, $jumlahDataPerhalaman");
 
 // cari
 if (isset($_POST["cari"])) {
@@ -27,13 +41,30 @@ if (isset($_POST["cari"])) {
         <div style="margin-bottom: 20px; margin-top: 20px;" class="">
             
             <a style="background-color: salmon; padding: 10px; margin-bottom: 30px; color: white;" href="./create.php">Tambah data mahasiswa</a>
-            
 
             <form action="" method="post" style="margin-top: 50px;">
                 <input type="text" name="key" id="" style="width: 400px; padding-top: 8px; padding-bottom: 8px;">
                 <button type="submit" name="cari" style="padding-top: 8px; padding-bottom: 8px;">Cari Data</button>
             </form>
 
+            <br>
+
+            <?php if ($halamanAktif > 1) :?>
+                <a href="./index.php?halaman=<?= $halamanAktif - 1; ?>">&laquo;</a>
+            <?php endif; ?>
+
+            <?php for ($i=01; $i <= $jumlahHalaman ; $i++) :?>
+                <?php if ($i == $halamanAktif) :?>
+                    <a style="font-weight: bold; color: salmon;" href="./index.php?halaman=<?= $i; ?>"><?= $i; ?></a>
+                <?php else : ?>
+                    <a href="./index.php?halaman=<?= $i; ?>"><?= $i; ?></a>
+                <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($halamanAktif < $jumlahHalaman) :?>
+                <a href="./index.php?halaman=<?= $halamanAktif + 1; ?>">&raquo;</a>
+            <?php endif; ?>
+            <br>
 
             </div>
             <table style="margin: auto;" border="1" cellpadding="10" cellspacing="0">

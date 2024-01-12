@@ -2,7 +2,21 @@
 
     include_once "../config/functionDosen.php";
 
-    $dosens = query("SELECT * FROM dosen");
+
+    // pagination
+    // hitung jumlah data perhalaman
+    $jumlahDataPerhalaman = 2;
+    // hitung total jumlah data di data base
+    $jumlahData = count(query("SELECT * FROM dosen"));
+    // hitung jumlah halaman
+    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+    // tentukan halaman aktifnya
+    $halamaAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+    // tentukan data awal
+    $dataAwal = ($jumlahDataPerhalaman * $halamaAktif) - $jumlahDataPerhalaman;
+
+
+    $dosens = query("SELECT * FROM dosen LIMIT 0, $jumlahDataPerhalaman");
 
     if (isset($_POST["cari"])) {
         $dosens = cari($_POST["key"]);
@@ -32,7 +46,23 @@
                 <button type="submit" name="cari" style="padding-top: 8px; padding-bottom: 8px;">Cari Data</button>
             </form>
 
+            <!-- pagination -->
 
+            <?php if ($halamaAktif > 1) :?>
+                <a  href="?halaman=<?= $halamaAktif - 1; ?>">&laquo;</a>
+            <?php endif; ?>
+
+            <?php for ($i=1; $i <= $jumlahHalaman ; $i++) :?>
+                <?php if ($i == $halamaAktif) :?>
+                    <a style="font-weight: bold; color: salmon;" href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+                    <?php else : ?>    
+                        <a  href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+                <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($halamaAktif < $jumlahHalaman ) :?>
+                <a  href="?halaman=<?= $halamaAktif + 1; ?>">&raquo;</a>
+            <?php endif; ?>
             </div>
             <table style="margin: auto;" border="1" cellpadding="10" cellspacing="0">
                 <thead>

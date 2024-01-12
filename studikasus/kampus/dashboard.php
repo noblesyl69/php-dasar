@@ -19,7 +19,10 @@ if (!isset($_SESSION["login"])) {
 </head>
 <body>
     <h1>Halaman dashboard</h1>
+    <br>
     <a href="./mahasiswa/index.php">Halaman Mahasiswa</a>
+    <a href=".//dosen/index.php">Halaman Dosen</a>
+    <br>
     <a href="logout.php">logout</a>
 </body>
 </html>
