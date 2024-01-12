@@ -26,7 +26,7 @@
         if ($password !== $password2) {
             echo "
                 <script>
-                    alert('username sudah ada');
+                    alert('Config password tidak sama');
                 </script>
             "; 
         }

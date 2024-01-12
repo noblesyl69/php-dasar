@@ -1,4 +1,23 @@
+<?php 
 
+
+    include_once "../config/functionDosen.php";
+
+    if (isset($_POST["submit"])) {
+        if (create($_POST) > 0) {
+            echo "
+                <script>
+                    alert('data anda berhasil di tambahkan');
+                    document.location.href='./index.php';
+                </script>
+            ";
+        }else {
+            echo mysqli_error($koneksi);
+        }
+    }
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -6,16 +25,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Mahasiswa</title>
+    <title>Data Dosen</title>
    
 </head>
 <body>
     <div >
-        <h1>FORM CREATE DATA MAHASISWA</h1>
-        <form action="" method="post">
+        <h1>FORM CREATE DATA DOSEN</h1>
+        <form action="" method="post" enctype="multipart/form-data">
             <label for="">
-                <span>Npm</span>
-                <input type="text" name="npm">
+                <span>Nis</span>
+                <input type="text" name="nis">
             </label>
             <br>
             <br>
@@ -32,8 +51,14 @@
             <br>
             <br>
             <label for="">
-                <span>jurusan</span>
-                <input type="text" name="jurusan">
+                <span>Matkul</span>
+                <input type="text" name="matkul">
+            </label>
+            <br>
+            <br>
+            <label for="">
+                <span>photo</span>
+                <input type="file" name="photo">
             </label>
             <br>
             <br>
