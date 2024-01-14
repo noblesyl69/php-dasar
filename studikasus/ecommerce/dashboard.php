@@ -1,4 +1,3 @@
-
 <?php 
 
     session_start();
@@ -6,7 +5,6 @@
         header("location: ./login.php");
         exit;
     }
-
 ?>
 
 
@@ -21,7 +19,7 @@
     <h1>selamat datang di dashboard</h1>
     <br>
 
-   
+    <a href="./users/index.php">Data User</a>
 
     <br>
     <a href="logout.php">logout</a>

@@ -33,11 +33,19 @@
 </head>
 <body>
     <h1>halaman register</h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <ul>
+            <li style="margin-bottom: 10px;">
+                <label for="">nama</label>
+                <input type="text" name="nama" id="">
+            </li>
             <li style="margin-bottom: 10px;">
                 <label for="">username</label>
                 <input type="text" name="username" id="">
+            </li>
+            <li style="margin-bottom: 10px;">
+                <label for="">email</label>
+                <input type="email" name="email" id="">
             </li>
             <li style="margin-bottom: 10px;">
                 <label for="">password</label>
@@ -46,6 +54,11 @@
             <li style="margin-bottom: 10px;">
                 <label for="">Config password</label>
                 <input type="password" name="password2" id="">
+            </li>
+
+            <li style="margin-bottom: 10px;">
+                <label for="">Photo</label>
+                <input type="file" name="photo" id="">
             </li>
             <li style="margin-bottom: 10px;">
                 <button type="submit" name="register">Register</button>
